@@ -17,7 +17,7 @@ beurt = 0
 worp = 0
 
 #bord afbeelding:
-bord = pygame.image.load("ganzenbord_800x600.png")
+bord = pygame.image.load("canvas (1).png")
 
 #-----------------Pygame initialisatie---------------
 
@@ -89,12 +89,12 @@ while not done:
   #teken pionnen als gekleurde cirkels op de coordinaten van de vakjes waar ze staan:
   speler0_x = vakjes[posities[0]][0]; #x-coordinaat pion speler 0
   speler0_y = vakjes[posities[0]][1]; #y-coordinaat pion speler 0
-  kleur0 = (0,255,0) #groen
+  kleur0 = (51, 51, 255) #blauw
   pygame.draw.circle(screen, kleur0, (speler0_x, speler0_y), 10) #teken cirkel als pion speler 0
   
   speler1_x = vakjes[posities[1]][0]; #x-coordinaat pion speler 1
   speler1_y = vakjes[posities[1]][1]; #y-coordinaat pion speler 1
-  kleur1 = (0,0,255) #blauw
+  kleur1 = (255, 26, 117) #echt mooie barbie roze
   pygame.draw.circle(screen, kleur1, (speler1_x, speler1_y), 10) #teken cirkel als pion speler 1\
 
   #we tekenen wat tekst op het scherm
