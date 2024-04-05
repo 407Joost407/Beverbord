@@ -1,5 +1,6 @@
 # Ganzenbord - Tibbe Dinjens
-import pygame, random
+import pygame, random, tkinter
+import tkinter.messagebox
 
 
 # -----------------Globale variabelen----------------
@@ -58,7 +59,36 @@ while not done:
 
         worp = random.randint(1,6) #Random getal tussen 1 en 6 als dobbelsteen
         posities[beurt] += worp #verzet de pion die op dit moment aan de beurt is
+        #vakje 1
+        if posities[beurt] == 1 :
+          tkinter.messagebox.showinfo("1 gegooid? :(", "aww arme jij, je mag 1 vakje vooruit als troost")
+          posities[beurt] = 2 
 
+        #vakje 5
+        if posities[beurt] == 5 :
+          tkinter.messagebox.showinfo("oopsie-daisy", "Oh nee! Je stapt op een stapel losse boomstronken en je rolt helemaal door naar 10")
+          posities[beurt] = 10
+
+        #vakje 9
+        if posities[beurt] == 9:
+          tkinter.messagebox.showinfo("pas op, otters", "Je ziet een pas op otters bord en wordt bang, ren terug naar vakje 3 :0")
+          posities[beurt] = 3
+
+        #vakje 38
+        if posities[beurt] == 38:
+          tkinter.messagebox.showinfo("Auwie :(", "Je struikelt over een losse tak. Auw! Ga naar het ziekenhuis op vakje 34")
+          posities[beurt] = 34
+
+        #vakje 45
+        if posities[beurt] == 45 :
+          tkinter.messagebox.showinfo("arm bevertje :/", "Je wordt aangevallen door een otter! Gelukkig heeft het beverdorp een goede therapeut. Hij zegt dat je een ronde moet overslaan voor een therapie sessie, na deze traumatische ervaring. Heb je al eerder therapie gevolgd? Ga dan ook een stap naar achter voor elke extra sessie")
+          posities[beurt] = 44
+
+        #vakje 57
+        if posities[beurt] == 57 :
+          tkinter.messagebox.showinfo("OH NEE!!", " De dam is doorgebroken! Je wordt door het water terug gespoelt naar vakje 26")
+          posities[beurt] = 26
+        
         #pion voorbij het laatste vakje? Dan valt die van het bord af :/
         #Daarom moet ie precies op vakje 63 vallen:
         if posities[beurt] >= 63:
