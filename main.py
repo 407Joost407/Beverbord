@@ -16,7 +16,7 @@ beurt = 0
 worp = 0
 
 #bord afbeelding:
-bord = pygame.image.load("canvas (1).png")
+bord = pygame.image.load("beverbord.png")
 
 #-----------------Pygame initialisatie---------------
 
@@ -69,27 +69,11 @@ while not done:
             beurt = 0
 
         #Is de pion op een speciaal vakje? Dan doe iets...
-        if posities[beurt] == 6: 
-          print("Je moeder")
-        elif ...
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        if posities[beurt] == 23: 
+          tkinter.messagebox.showinfo("Paddenstoelen", "Je eet een paddenstoel, een magische paddenstoel. Het voelt alsof je in de wolken bent, of ben je dat ook. Als je weer bij bewustzijn bent sta je ineens op vakje 40, maar je was zo lang in de wolken dat je volgende beurt is vergaan.")
+          posities[beurt] = 40
+        elif posities[beurt] == 45:
+        elif posities[beurt] == 58:
 
 
       
