@@ -8,19 +8,19 @@ import tkinter.messagebox
 def graphics():
   screen.fill((255,255,255))#witte achtergrond
 
-  bordrect = bord.get_rect() #vraag afmetingen (rectangle) van het bordplaatje op
+  bordrect = bord.get_rect() #afmetingen van het bordplaatje opvragen
   screen.blit(bord, bordrect) #teken het bord op het volgende screen:
 
   #teken pionnen als gekleurde cirkels op de coordinaten van de vakjes waar ze staan:
   speler0_x = vakjes[posities[0]][0]; #x-coordinaat pion speler 0
   speler0_y = vakjes[posities[0]][1]; #y-coordinaat pion speler 0
   kleur0 = (51, 51, 255) #blauw
-  pygame.draw.circle(screen, kleur0, (speler0_x, speler0_y), 10) #teken cirkel als pion speler 0
+  pygame.draw.circle(screen, kleur0, (speler0_x, speler0_y), 10) #teken speler 0
 
   speler1_x = vakjes[posities[1]][0]; #x-coordinaat pion speler 1
   speler1_y = vakjes[posities[1]][1]; #y-coordinaat pion speler 1
   kleur1 = (255, 26, 117) #echt mooie barbie roze
-  pygame.draw.circle(screen, kleur1, (speler1_x, speler1_y), 10) #teken cirkel als pion speler 1\
+  pygame.draw.circle(screen, kleur1, (speler1_x, speler1_y), 10) #teken speler 1
 
   #we tekenen wat tekst op het scherm
   #Kies het standaardfont en een lettergrootte (30):
@@ -50,6 +50,10 @@ worp = 0
 #bord afbeelding:
 bord = pygame.image.load("beverbord.png")
 
+#Voor speciale vakjes:
+beurtOverslaan = [False, False]
+therapie = [0,0] 
+
 #-----------------Pygame initialisatie---------------
 
 #pygame instaleren
@@ -73,6 +77,8 @@ clock = pygame.time.Clock()
 top = tkinter.Tk()
 top.withdraw()
 
+
+
 while not done:
   
   # --- Check gebeurtenissen en werk de admiraal bij ---
@@ -86,27 +92,47 @@ while not done:
       #er is een toets ingedrukt, we kijken welke en ondernemen actie
       if event.key == pygame.K_SPACE: #spatie
         print ("Knop: Spatie")
-
-        worp = random.randint(1,6) #Random getal tussen 1 en 6 als dobbelsteen
-
-        posities[beurt] += worp #verzet de pion die aan de beurt is
-        
+        if beurtOverslaan[beurt] == True:
+          worp = 0
+          beurtOverslaan[beurt] = False
+        else:
+          worp = random.randint(1,6) #Random getal als dobbelsteen
+          posities[beurt] += worp #verzet de pion die aan de beurt is
+  
+        if posities[0] == posities[1]:
+          #battle
+          tkinter.messagebox.showinfo("Battle","Je bent op hetzelfde vakje als je tegenspeler belandt. Gooien! Hoogste speler mag het vakje houden.")
+          worp1 = random.randint(1,6) #aanvaller
+          worp2 = random.randint(1,6) #verdediger
+          print(worp1, worp2)
+          if worp1 <= worp2:
+            posities[beurt] -= 1
+          else:
+            if beurt == 0:
+              posities[1] -= 1
+            else:
+              posities[0] -= 1
+          
+          
         #Is de pion op een speciaal vakje? Dan doe iets...
         #vakje 1
         if posities[beurt] == 1 :
           tkinter.messagebox.showinfo("1 gegooid? :(", "aww arme jij, je mag 1 vakje vooruit als troost")
           posities[beurt] = 2 
+          print("vakje 1\n", "speler", beurt +1)
         #vakje 5
         elif posities[beurt] == 5 :
           tkinter.messagebox.showinfo("oopsie-daisy", "Oh nee! Je stapt op een stapel losse boomstronken en je rolt helemaal door naar 10")
           posities[beurt] = 10
+          print("vakje 5\n", "speler", beurt +1)
         #vakje 9
         elif posities[beurt] == 9:
           tkinter.messagebox.showinfo("pas op, otters", "Je ziet een pas op otters bord en wordt bang, ren terug naar vakje 3 :0")
           posities[beurt] = 3
+          print("vakje 9\n", "speler", beurt +1)
         #vakje 13
         elif posities[beurt] == 13:
-          tkinter.messagebox.showinfo("ottergeluk","Je staat nu op nummer 13, dit is een ongeluksgetal. De otters komen je terug naar de start slepen als je geen drie gooit. Druk op ok om opnieuw te gooien.")
+          tkinter.messagebox.showinfo("ottergeluk","Met een beetje ottergeluk mag je naar nummer 13. Als je 3 gooit mag je er heen, anders komen de otters je terug naar de start slepen. Druk op ok om opnieuw te gooien.")
           pygame.time.delay(3000)
           worps = random.randint(1,6)
           if worps == 3:
@@ -117,6 +143,7 @@ while not done:
             tkinter.messagebox.showinfo("geen 3 gegooit","AH OH, je hebt geen 3 gegooit de otters slepen je helemaal terug naar de start.")
             pygame.time.delay(3000)
             posities[beurt] -= 13
+          print("vakje 13\n", "speler", beurt +1)
         #vakje 19
         elif posities[beurt] == 19:
 
@@ -133,47 +160,59 @@ while not done:
             tkinter.messagebox.showinfo("geen 6 gegooit","Womp Womp, je hebt geen 6 gegooit. Je mag dus niet over de dam heen en blijft staan op vakje 19.")
             pygame.time.delay(3000)
             posities[beurt] += 0
+          print("vakje 19\n", "speler", beurt +1)
         #vakje 23
         elif posities[beurt] == 23: 
           tkinter.messagebox.showinfo("Paddenstoelen", "Je eet een paddenstoel, een magische paddenstoel. Het voelt alsof je in de wolken bent, of ben je dat ook. Als je weer bij bewustzijn bent sta je ineens op vakje 40, maar je was zo lang in de wolken dat je volgende beurt is vergaan.")
+          beurtOverslaan[beurt] = True
           posities[beurt] = 40
+          print("vakje 23\n", "speler", beurt +1)
         #vakje 32
         elif posities[beurt]== 32:
 
-          tkinter.messagebox.showinfo("Otter uitdaging","Een groep kinder otters dagen je uit voor een potje dammen. Gooien! ")
+          tkinter.messagebox.showinfo("Otter uitdaging","Een groep tiener otters dagen je uit voor een potje dammen. Gooien! ")
           pygame.time.delay(3000)
           worps = random.randint(1,6)
           print(worps)
           if worps == 1 or 3 or 5:
-            tkinter.messagebox.showinfo("oneven","Je hebt een oneven getal gegooit. Je hebt verloren, de otters lachen zo hard dat je stiekem een vakje vooruit kan gaan")
+            tkinter.messagebox.showinfo("oneven","Je hebt een oneven getal gegooit. Je hebt verloren, de otters lachen zo hard dat je stiekem een vakje vooruit kan gaan.")
             pygame.time.delay(3000)
-            posities[beurt] +=1
+            posities[beurt] += 1
           else:
 
             tkinter.messagebox.showinfo("even","Je hebt een even getal gegooit. Je hebt gewonnen, de otters kunnen niet tegen hun verlies en worden boos. Ga 1 vakje terug en verstop je in de bosjes.")
             pygame.time.delay(3000)
-            posities[beurt] -=1
+            posities[beurt] -= 1
+          print("vakje 32\n", "speler", beurt +1)
         #vakje 38
         elif posities[beurt] == 38:
           tkinter.messagebox.showinfo("Auwie :(", "Je struikelt over een losse tak. Auw! Ga naar het ziekenhuis op vakje 34")
           posities[beurt] = 34
+          print("vakje 38\n", "speler", beurt +1)
         #vakje 45
         elif posities[beurt] == 45 :
           tkinter.messagebox.showinfo("arm bevertje :/", "Je wordt aangevallen door een otter! Gelukkig heeft het beverdorp een goede therapeut. Hij zegt dat je een ronde moet overslaan voor een therapie sessie, na deze traumatische ervaring. Heb je al eerder therapie gevolgd? Ga dan ook een stap naar achter voor elke extra sessie")
-          posities[beurt] = 44
+          therapie[beurt] = therapie[beurt] + 1
+          posities[beurt] -= therapie[beurt] - 1
+          beurtOverslaan = True
+          print("vakje 45\n", "speler", beurt +1)
         #vakje 57
         elif posities[beurt] == 57 :
           tkinter.messagebox.showinfo("OH NEE!!", " De dam is doorgebroken! Je wordt door het water terug gespoelt naar vakje 26")
           posities[beurt] = 26
+          print("vakje 57\n", "speler", beurt +1)
         #vakje 58
         elif posities[beurt] == 58:
-          #sla beurt over
-          print("hoi")
+          tkinter.messagebox.showinfo("Dammen", "Je bent tussen twee dammen ingevallen. De klim naar boven zal je je volgende beurt kosten.")
+          beurtOverslaan[beurt] = True
+          print("vakje 58\n", "speler", beurt +1)
 
         
         #pion moet precies op vakje 63 vallen:
         if posities[beurt] >= 63:
           posities[beurt] = 63
+          tkinter.messagebox.showinfo("WHOOO", "GEWONNEN, JA HOOR WE HEBBEN EEN WINNAAR! GEFELICITEERD! DIE OTTERS ZULLEN ONS NOOIT VERSLAAN! :)") 
+          done = True
           #Nog niet gewonnen? geef beurt door aan de volgende speler:
         else:
             
@@ -181,7 +220,7 @@ while not done:
             beurt = 1
           else:
             beurt = 0
-
+ 
       elif event.key == pygame.K_BACKSPACE: #backspace
         print("Knop: Backspace")
         #om een nieuw spel te starten, moeten de spelerposities weer op 0 zetten.
