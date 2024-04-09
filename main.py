@@ -53,7 +53,6 @@ bord = pygame.image.load("beverbord.png")
 #Voor speciale vakjes:
 beurtOverslaan = [False, False]
 therapie = [0,0] 
-
 #-----------------Pygame initialisatie---------------
 
 #pygame instaleren
@@ -112,8 +111,11 @@ while not done:
               posities[1] -= 1
             else:
               posities[0] -= 1
-          
-          
+
+        
+       
+         
+        
         #Is de pion op een speciaal vakje? Dan doe iets...
         #vakje 1
         if posities[beurt] == 1 :
@@ -213,6 +215,9 @@ while not done:
           posities[beurt] = 63
           tkinter.messagebox.showinfo("WHOOO", "GEWONNEN, JA HOOR WE HEBBEN EEN WINNAAR! GEFELICITEERD! DIE OTTERS ZULLEN ONS NOOIT VERSLAAN! :)") 
           done = True
+
+        elif worp == 6 :
+          tkinter.messagebox.showinfo("6", "Lets gooo je hebt 6 gegooiddd, nu mag je nog een keer gooien")
           #Nog niet gewonnen? geef beurt door aan de volgende speler:
         else:
             
