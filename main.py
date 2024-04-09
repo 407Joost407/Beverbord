@@ -58,6 +58,7 @@ therapie = [0,0]
 
 #pygame instaleren
 pygame.init()
+pygame.mixer.init()
 
 #afmetingen van het spelscherm instellen en het spelscherm maken
 WINDOW_SIZE = [800,600]
@@ -82,41 +83,46 @@ top.withdraw()
 while not done:
   
   # --- Check gebeurtenissen en werk de admiraal bij ---
-  
+  graphics()
   for event in pygame.event.get(): 
     #doorloop alle gebeurtenissen sinds de vorige schermupdate
     
     if event.type == pygame.QUIT: #gebeurtenis: het kruisje is aangeklikt
-      done = True #We zetten done op True, zodat de loop stopt
+      answer = tkinter.messagebox.askyesno("Beverbord", "Weet je zeker dat je wilt stoppen?")
+      if answer == True :
+        done = True #We zetten done op True, zodat de loop stopt
     elif event.type == pygame.KEYDOWN:
       #er is een toets ingedrukt, we kijken welke en ondernemen actie
       if event.key == pygame.K_SPACE: #spatie
         print ("Knop: Spatie")
+        graphics()
         if beurtOverslaan[beurt] == True:
           worp = 0
           beurtOverslaan[beurt] = False
         else:
           worp = random.randint(1,6) #Random getal als dobbelsteen
           posities[beurt] += worp #verzet de pion die aan de beurt is
-  
+          
+        #Is de pion op een speciaal vakje? Dan doe iets...
+        #Zelfde vakje als je tegenstander:
+        
         if posities[0] == posities[1]:
           #battle
           tkinter.messagebox.showinfo("Battle","Je bent op hetzelfde vakje als je tegenspeler belandt. Gooien! Hoogste speler mag het vakje houden.")
           worp1 = random.randint(1,6) #aanvaller
           worp2 = random.randint(1,6) #verdediger
-          print(worp1, worp2)
+          print("speler", beurt + 1, "valt de andere speler aan met", worp1, "\nEr wordt verdedigt met", worp2)
           if worp1 <= worp2:
             posities[beurt] -= 1
           else:
             if beurt == 0:
               posities[1] -= 1
+              
             else:
               posities[0] -= 1
-          
-          
-        #Is de pion op een speciaal vakje? Dan doe iets...
+          tkinter.messagebox.showinfo("Battle","De verliezer moet 1 vakje achteruit.")
         #vakje 1
-        if posities[beurt] == 1 :
+        elif posities[beurt] == 1 :
           tkinter.messagebox.showinfo("1 gegooid? :(", "aww arme jij, je mag 1 vakje vooruit als troost")
           posities[beurt] = 2 
           print("vakje 1\n", "speler", beurt +1)
@@ -230,7 +236,7 @@ while not done:
 
   # --- Teken de graphics voor de volgende schermupdate (nog buiten beeld) ---
 
-  graphics()
+  
   #deze staan in functie bovenaan de code
   
   # --- Update de graphics voor de volgende schermupdate (nog buiten beeld) ---
