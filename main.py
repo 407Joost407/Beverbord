@@ -53,7 +53,6 @@ bord = pygame.image.load("beverbord.png")
 #Voor speciale vakjes:
 beurtOverslaan = [False, False]
 therapie = [0,0] 
-
 #-----------------Pygame initialisatie---------------
 
 #pygame instaleren
@@ -81,9 +80,10 @@ top.withdraw()
 
 
 while not done:
-  
-  # --- Check gebeurtenissen en werk de admiraal bij ---
+  # --- Teken de graphics voor de volgende schermupdate (nog buiten beeld) ---
   graphics()
+  # --- Check gebeurtenissen en werk de admiraal bij ---
+  
   for event in pygame.event.get(): 
     #doorloop alle gebeurtenissen sinds de vorige schermupdate
     
@@ -121,6 +121,8 @@ while not done:
             else:
               posities[0] -= 1
           tkinter.messagebox.showinfo("Battle","De verliezer moet 1 vakje achteruit.")
+
+        #Is de pion op een speciaal vakje? Dan doe iets...
         #vakje 1
         elif posities[beurt] == 1 :
           tkinter.messagebox.showinfo("1 gegooid? :(", "aww arme jij, je mag 1 vakje vooruit als troost")
@@ -219,14 +221,15 @@ while not done:
           posities[beurt] = 63
           tkinter.messagebox.showinfo("WHOOO", "GEWONNEN, JA HOOR WE HEBBEN EEN WINNAAR! GEFELICITEERD! DIE OTTERS ZULLEN ONS NOOIT VERSLAAN! :)") 
           done = True
-          #Nog niet gewonnen? geef beurt door aan de volgende speler:
+        elif worp == 6 :
+          tkinter.messagebox.showinfo("6", "Lets gooo je hebt 6 gegooiddd, nu mag je nog een keer gooien")
+        #Nog niet gewonnen? geef beurt door aan de volgende speler:
         else:
             
           if beurt == 0:
             beurt = 1
           else:
             beurt = 0
- 
       elif event.key == pygame.K_BACKSPACE: #backspace
         print("Knop: Backspace")
         #om een nieuw spel te starten, moeten de spelerposities weer op 0 zetten.
@@ -234,7 +237,7 @@ while not done:
         beurt = 0
         posities = [0,0]
 
-  # --- Teken de graphics voor de volgende schermupdate (nog buiten beeld) ---
+
 
   
   #deze staan in functie bovenaan de code
