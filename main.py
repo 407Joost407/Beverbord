@@ -202,7 +202,7 @@ while not done:
         elif posities[beurt] == 45 :
           tkinter.messagebox.showinfo("arm bevertje :/", "Je wordt aangevallen door een otter! Gelukkig heeft het beverdorp een goede therapeut. Hij zegt dat je een ronde moet overslaan voor een therapie sessie, na deze traumatische ervaring. Heb je al eerder therapie gevolgd? Ga dan ook een stap naar achter voor elke extra sessie")
           therapie[beurt] = therapie[beurt] + 1
-          posities[beurt] -= therapie[beurt] - 1
+          posities[beurt] = therapie[beurt] - 1
           beurtOverslaan = True
           print("vakje 45\n", "speler", beurt +1)
         #vakje 57
