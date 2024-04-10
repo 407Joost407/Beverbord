@@ -1,10 +1,10 @@
 # Beverbord
 # Lente van Haastrecht, Jasmijn Rodenburg, Tibbe Dinjens
-#PO informatica 5VA periode 3 2024
+# PO informatica 5VA periode 3 2024
 import pygame, random, tkinter
 import tkinter.messagebox
 
-
+# -- Alle graphics voor het spel --
 def graphics():
   screen.fill((255,255,255))#witte achtergrond
 
@@ -35,6 +35,7 @@ def graphics():
   text = "Aan de beurt: " + str(beurt + 1)
   label = myfont.render(text,1, (0,0,0))
   screen.blit(label, (350,390))
+
 # -----------------Globale variabelen----------------
 
 #coordinaten van de vakjes:
@@ -53,6 +54,7 @@ bord = pygame.image.load("beverbord.png")
 #Voor speciale vakjes:
 beurtOverslaan = [False, False]
 therapie = [0,0] 
+
 #-----------------Pygame initialisatie---------------
 
 #pygame instaleren
@@ -80,7 +82,7 @@ top.withdraw()
 
 
 while not done:
-  # --- Teken de graphics voor de volgende schermupdate (nog buiten beeld) ---
+  # --- Graphics aanroepen ---
   graphics()
   # --- Check gebeurtenissen en werk de admiraal bij ---
   
@@ -117,7 +119,6 @@ while not done:
           else:
             if beurt == 0:
               posities[1] -= 1
-              
             else:
               posities[0] -= 1
           tkinter.messagebox.showinfo("Battle","De verliezer moet 1 vakje achteruit.")
