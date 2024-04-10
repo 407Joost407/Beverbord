@@ -74,6 +74,8 @@ done = False
 #pygame Clock object om de verversingssnelheid van het scherm te beheren
 clock = pygame.time.Clock()
 
+#pygame mixer voor muziek
+pygame.mixer.init()
 
 #---------------Hoofdloop van het programma----------
 top = tkinter.Tk()
@@ -105,7 +107,7 @@ while not done:
           worp = random.randint(1,6) #Random getal als dobbelsteen
           posities[beurt] += worp #verzet de pion die aan de beurt is
           
-        #Is de pion op een speciaal vakje? Dan doe iets...
+      
         #Zelfde vakje als je tegenstander:
         
         if posities[0] == posities[1]:
@@ -205,10 +207,19 @@ while not done:
           posities[beurt] = therapie[beurt] - 1
           beurtOverslaan = True
           print("vakje 45\n", "speler", beurt +1)
+        #vakje 52
+        elif posities[beurt] == 52 :
+          tkinter.messagebox.showinfo("OtterBox", "Een groep otters heeft een speaker in de bosjes verstopt en je wordt gerickrolled. Dat is even schrikken.")
+          pygame.mixer.music.load("Untitled3.ogg") 
+          pygame.mixer.music.play(0)
+          pygame.mixer.music.set_volume(0.5)
         #vakje 57
         elif posities[beurt] == 57 :
-          tkinter.messagebox.showinfo("OH NEE!!", " De dam is doorgebroken! Je wordt door het water terug gespoelt naar vakje 26")
+          tkinter.messagebox.showinfo("OH NEE!!", " De dam is doorgebroken! Je wordt door het water terug gespoelt naar vakje 26. De golf is zo krachtig dat de andere spelers elk 8 vakjes naar achter moeten.")
+          for x in posities:
+            posities[x] -= 8
           posities[beurt] = 26
+          
           print("vakje 57\n", "speler", beurt +1)
         #vakje 58
         elif posities[beurt] == 58:
